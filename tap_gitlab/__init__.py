@@ -175,6 +175,18 @@ RESOURCES = {
         'key_properties': ['group_id', 'epic_iid', 'epic_issue_id'],
         'replication_method': 'FULL_TABLE',
     },
+    'issue_notes': {
+        'url': '/projects/{id}/issues/{secondary_id}/notes',
+        'schema': load_schema('issue_notes'),
+        'key_properties': ['project_id', 'issue_iid', 'note_id'],
+        'replication_method': 'INCREMENTAL',
+    },
+    'issue_resource_label_events': {
+        'url': '/projects/{id}/issues/{secondary_id}/resource_label_events',
+        'schema': load_schema('issue_resource_label_events'),
+        'key_properties': ['project_id', 'issue_iid', 'resource_label_event_id'],
+        'replication_method': 'INCREMENTAL',
+    },
     'pipelines': {
         'url': '/projects/{id}/pipelines?updated_after={start_date}',
         'schema': load_schema('pipelines'),
@@ -411,6 +423,10 @@ def sync_issues(project):
             singer.write_record(entity, transformed_row, time_extracted=utils.now())
             utils.update_state(STATE, state_key, row['updated_at'])
 
+            # And then sync all the notes and resource state events for that issue
+            sync_issue_notes(project, transformed_row)
+            sync_issue_resource_label_events(project, transformed_row)
+
     singer.write_state(STATE)
 
 def sync_merge_requests(project):
@@ -626,6 +642,42 @@ def sync_epic_issues(group, epic):
             transformed_row = transformer.transform(row, RESOURCES["epic_issues"]["schema"], mdata)
 
             singer.write_record("epic_issues", transformed_row, time_extracted=utils.now())
+
+def sync_issue_notes(project, issue):
+    entity = "notes"
+    stream = CATALOG.get_stream(entity)
+    if stream is None or not stream.is_selected():
+        return
+    mdata = metadata.to_map(stream.metadata)
+
+    url = get_url(entity=entity, id=project['id'], secondary_id=issue['iid'])
+
+    with Transformer(pre_hook=format_timestamp) as transformer:
+        for row in gen_request(url):
+            row['project_id'] = project['id']
+            row['issue_iid'] = issue['iid']
+            row['note_id'] = row['id']
+            transformed_row = transformer.transform(row, RESOURCES[entity]["schema"], mdata)
+
+            singer.write_record(entity, transformed_row, time_extracted=utils.now())
+
+def sync_issue_resource_label_events(project, issue):
+    entity = "notes"
+    stream = CATALOG.get_stream(entity)
+    if stream is None or not stream.is_selected():
+        return
+    mdata = metadata.to_map(stream.metadata)
+
+    url = get_url(entity=entity, id=project['id'], secondary_id=issue['iid'])
+
+    with Transformer(pre_hook=format_timestamp) as transformer:
+        for row in gen_request(url):
+            row['project_id'] = project['id']
+            row['issue_iid'] = issue['iid']
+            row['resource_label_event_id'] = row['id']
+            transformed_row = transformer.transform(row, RESOURCES[entity]["schema"], mdata)
+
+            singer.write_record(entity, transformed_row, time_extracted=utils.now())
 
 def sync_epics(group):
     entity = "epics"

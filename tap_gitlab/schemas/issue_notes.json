@@ -1,0 +1,78 @@
+{
+    "type": "object",
+    "properties": {
+        "project_id": {
+            "type": "integer"
+        },
+        "issue_iid": {
+            "type": "integer"
+        },
+        "note_id": {
+            "type": "integer"
+        },
+        "body": {
+            "type": "string"
+        },
+        "attachment": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string"
+                },
+                "filename": {
+                    "type": "string"
+                },
+                "filesize": {
+                    "type": "integer"
+                }
+            }
+        },
+        "author": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "avatar_url": {
+                    "type": "string"
+                },
+                "web_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "created_at": {
+            "type": "string"
+        },
+        "updated_at": {
+            "type": "string"
+        },
+        "system": {
+            "type": "boolean"
+        },
+        "noteable_id": {
+            "type": "integer"
+        },
+        "noteable_type": {
+            "type": "string"
+        },
+        "resolvable": {
+            "type": "boolean"
+        },
+        "confidential": {
+            "type": "boolean"
+        },
+        "noteable_iid": {
+            "type": "integer"
+        }
+    }
+}
