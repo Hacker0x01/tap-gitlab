@@ -644,7 +644,7 @@ def sync_epic_issues(group, epic):
             singer.write_record("epic_issues", transformed_row, time_extracted=utils.now())
 
 def sync_issue_notes(project, issue):
-    entity = "notes"
+    entity = "issue_notes"
     stream = CATALOG.get_stream(entity)
     if stream is None or not stream.is_selected():
         return
@@ -662,7 +662,7 @@ def sync_issue_notes(project, issue):
             singer.write_record(entity, transformed_row, time_extracted=utils.now())
 
 def sync_issue_resource_label_events(project, issue):
-    entity = "notes"
+    entity = "issue_resource_label_events"
     stream = CATALOG.get_stream(entity)
     if stream is None or not stream.is_selected():
         return
