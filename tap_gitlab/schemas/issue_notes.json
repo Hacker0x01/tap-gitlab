@@ -27,11 +27,8 @@
                 }
             }
         },
-        "author": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
+        "author_id": {
+            "type": ["null", "integer"]
                 },
         "created_at": {
             "anyOf": [

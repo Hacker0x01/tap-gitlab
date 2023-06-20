@@ -10,11 +10,8 @@
         "resource_label_event_id": {
             "type": "integer"
         },
-        "user": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
+        "user_id": {
+            "type": ["null", "integer"]
                 },
         "created_at": {
             "anyOf": [
