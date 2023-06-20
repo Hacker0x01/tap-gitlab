@@ -180,12 +180,14 @@ RESOURCES = {
         'schema': load_schema('issue_notes'),
         'key_properties': ['project_id', 'issue_iid', 'note_id'],
         'replication_method': 'INCREMENTAL',
+        'replication_keys': ['updated_at'],
     },
     'issue_resource_label_events': {
         'url': '/projects/{id}/issues/{secondary_id}/resource_label_events',
         'schema': load_schema('issue_resource_label_events'),
         'key_properties': ['project_id', 'issue_iid', 'resource_label_event_id'],
         'replication_method': 'INCREMENTAL',
+        'replication_keys': ['updated_at'],
     },
     'pipelines': {
         'url': '/projects/{id}/pipelines?updated_after={start_date}',
@@ -650,7 +652,11 @@ def sync_issue_notes(project, issue):
         return
     mdata = metadata.to_map(stream.metadata)
 
-    url = get_url(entity=entity, id=project['id'], secondary_id=issue['iid'])
+    # Keep a state for the notes fetched per project and issue
+    state_key = "project_{}_issue_{}_notes".format(project["id"], issue["iid"])
+    start_date=get_start(state_key)
+
+    url = get_url(entity=entity, id=project['id'], secondary_id=issue['iid'], start_date=start_date)
 
     with Transformer(pre_hook=format_timestamp) as transformer:
         for row in gen_request(url):
@@ -660,6 +666,9 @@ def sync_issue_notes(project, issue):
             transformed_row = transformer.transform(row, RESOURCES[entity]["schema"], mdata)
 
             singer.write_record(entity, transformed_row, time_extracted=utils.now())
+            utils.update_state(STATE, state_key, row['updated_at'])
+    
+    singer.write_state(STATE)
 
 def sync_issue_resource_label_events(project, issue):
     entity = "issue_resource_label_events"
@@ -668,7 +677,11 @@ def sync_issue_resource_label_events(project, issue):
         return
     mdata = metadata.to_map(stream.metadata)
 
-    url = get_url(entity=entity, id=project['id'], secondary_id=issue['iid'])
+    # Keep a state for the resource label events fetched per project and issue
+    state_key = "project_{}_issue_{}_resource_label_events".format(project["id"], issue["iid"])
+    start_date=get_start(state_key)
+
+    url = get_url(entity=entity, id=project['id'], secondary_id=issue['iid'], start_date=start_date)
 
     with Transformer(pre_hook=format_timestamp) as transformer:
         for row in gen_request(url):
@@ -678,6 +691,9 @@ def sync_issue_resource_label_events(project, issue):
             transformed_row = transformer.transform(row, RESOURCES[entity]["schema"], mdata)
 
             singer.write_record(entity, transformed_row, time_extracted=utils.now())
+            utils.update_state(STATE, state_key, row['updated_at'])
+    
+    singer.write_state(STATE)
 
 def sync_epics(group):
     entity = "epics"

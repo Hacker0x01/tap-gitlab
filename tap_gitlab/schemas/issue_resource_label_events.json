@@ -16,25 +16,27 @@
                 "id": {
                     "type": "integer"
                 },
-                "name": {
-                    "type": "string"
-                },
-                "username": {
-                    "type": "string"
-                },
-                "state": {
-                    "type": "string"
-                },
-                "avatar_url": {
-                    "type": "string"
-                },
-                "web_url": {
-                    "type": "string"
-                }
-            },
-        },
         "created_at": {
-            "type": "string"
+            "anyOf": [
+                {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                {
+                    "type": "null"
+                }
+            ]
+                },
+        "updated_at": {
+            "anyOf": [
+                {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                {
+                    "type": "null"
+                }
+            ]
         },
         "resource_type": {
             "type": "string"
