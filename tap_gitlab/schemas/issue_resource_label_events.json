@@ -12,7 +12,7 @@
         },
         "user_id": {
             "type": ["null", "integer"]
-                },
+        },
         "created_at": {
             "anyOf": [
                 {
@@ -23,7 +23,7 @@
                     "type": "null"
                 }
             ]
-                },
+        },
         "updated_at": {
             "anyOf": [
                 {
@@ -55,7 +55,7 @@
                 },
                 "description": {
                     "type": "string"
-                },
+                }
             },
             "action": {
                 "type": "string"

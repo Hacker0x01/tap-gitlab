@@ -29,7 +29,7 @@
         },
         "author_id": {
             "type": ["null", "integer"]
-                },
+        },
         "created_at": {
             "anyOf": [
                 {
@@ -40,7 +40,7 @@
                     "type": "null"
                 }
             ]
-                },
+        },
         "updated_at": {
             "anyOf": [
                 {
@@ -65,6 +65,9 @@
             "type": "boolean"
         },
         "confidential": {
+            "type": "boolean"
+        },
+        "internal": {
             "type": "boolean"
         },
         "noteable_iid": {
