@@ -14,18 +14,25 @@
             "type": "string"
         },
         "attachment": {
-            "type": "object",
-            "properties": {
-                "url": {
-                    "type": "string"
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "url": {
+                            "type": "string"
+                        },
+                        "filename": {
+                            "type": "string"
+                        },
+                        "filesize": {
+                            "type": "integer"
+                        }
+                    }
                 },
-                "filename": {
-                    "type": "string"
-                },
-                "filesize": {
-                    "type": "integer"
+                {
+                    "type": "null"
                 }
-            }
+            ]
         },
         "author_id": {
             "type": ["null", "integer"]

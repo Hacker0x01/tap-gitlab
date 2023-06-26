@@ -42,24 +42,31 @@
             "type": "integer"
         },
         "label": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "color": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        }
+                    }
                 },
-                "name": {
-                    "type": "string"
-                },
-                "color": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
+                {
+                    "type": "null"
                 }
-            },
-            "action": {
-                "type": "string"
-            }
+            ]
+        },
+        "action": {
+            "type": "string"
         }
     }
 }
