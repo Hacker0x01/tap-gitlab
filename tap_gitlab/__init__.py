@@ -697,7 +697,7 @@ def sync_issue_resource_label_events(project, issue):
             transformed_row = transformer.transform(row, RESOURCES[entity]["schema"], mdata)
 
             singer.write_record(entity, transformed_row, time_extracted=utils.now())
-            utils.update_state(STATE, state_key, row['updated_at'])
+            utils.update_state(STATE, state_key, row['created_at'])
     
     singer.write_state(STATE)
 
