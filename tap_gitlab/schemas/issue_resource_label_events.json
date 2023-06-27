@@ -24,17 +24,6 @@
                 }
             ]
         },
-        "updated_at": {
-            "anyOf": [
-                {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                {
-                    "type": "null"
-                }
-            ]
-        },
         "resource_type": {
             "type": "string"
         },

@@ -187,7 +187,7 @@ RESOURCES = {
         'schema': load_schema('issue_resource_label_events'),
         'key_properties': ['project_id', 'issue_iid', 'resource_label_event_id'],
         'replication_method': 'INCREMENTAL',
-        'replication_keys': ['updated_at'],
+        'replication_keys': ['created_at'],
     },
     'pipelines': {
         'url': '/projects/{id}/pipelines?updated_after={start_date}',
