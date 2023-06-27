@@ -189,6 +189,13 @@ RESOURCES = {
         'replication_method': 'INCREMENTAL',
         'replication_keys': ['created_at'],
     },
+    'issue_resource_milestone_events': {
+        'url': '/projects/{id}/issues/{secondary_id}/resource_milestone_events',
+        'schema': load_schema('issue_resource_milestone_events'),
+        'key_properties': ['project_id', 'issue_iid', 'resource_milestone_event_id'],
+        'replication_method': 'INCREMENTAL',
+        'replication_keys': ['updated_at'],
+    },
     'pipelines': {
         'url': '/projects/{id}/pipelines?updated_after={start_date}',
         'schema': load_schema('pipelines'),
@@ -428,6 +435,7 @@ def sync_issues(project):
             # And then sync all the notes and resource state events for that issue
             sync_issue_notes(project, transformed_row)
             sync_issue_resource_label_events(project, transformed_row)
+            sync_issue_resource_milestone_events(project, transformed_row)
 
     singer.write_state(STATE)
 
@@ -696,6 +704,34 @@ def sync_issue_resource_label_events(project, issue):
 
             singer.write_record(entity, transformed_row, time_extracted=utils.now())
             utils.update_state(STATE, state_key, row['created_at'])
+    
+    singer.write_state(STATE)
+
+def sync_issue_resource_milestone_events(project, issue):
+    entity = "issue_resource_milestone_events"
+    stream = CATALOG.get_stream(entity)
+    if stream is None or not stream.is_selected():
+        return
+    mdata = metadata.to_map(stream.metadata)
+
+    # Keep a state for the resource milestone events fetched per project and issue
+    state_key = "project_{}_issue_{}_resource_milestone_events".format(project["id"], issue["iid"])
+    start_date=get_start(state_key)
+
+    url = get_url(entity=entity, id=project['id'], secondary_id=issue['iid'], start_date=start_date)
+
+    with Transformer(pre_hook=format_timestamp) as transformer:
+        for row in gen_request(url):
+            flatten_id(row, "user")
+            flatten_id(row, "milestone")
+
+            row['project_id'] = project['id']
+            row['issue_iid'] = issue['iid']
+            row['resource_milestone_event_id'] = row['id']
+            transformed_row = transformer.transform(row, RESOURCES[entity]["schema"], mdata)
+
+            singer.write_record(entity, transformed_row, time_extracted=utils.now())
+            utils.update_state(STATE, state_key, row['updated_at'])
     
     singer.write_state(STATE)
 
