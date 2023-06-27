@@ -194,7 +194,7 @@ RESOURCES = {
         'schema': load_schema('issue_resource_milestone_events'),
         'key_properties': ['project_id', 'issue_iid', 'resource_milestone_event_id'],
         'replication_method': 'INCREMENTAL',
-        'replication_keys': ['updated_at'],
+        'replication_keys': ['created_at'],
     },
     'pipelines': {
         'url': '/projects/{id}/pipelines?updated_after={start_date}',
@@ -731,7 +731,7 @@ def sync_issue_resource_milestone_events(project, issue):
             transformed_row = transformer.transform(row, RESOURCES[entity]["schema"], mdata)
 
             singer.write_record(entity, transformed_row, time_extracted=utils.now())
-            utils.update_state(STATE, state_key, row['updated_at'])
+            utils.update_state(STATE, state_key, row['created_at'])
     
     singer.write_state(STATE)
 
