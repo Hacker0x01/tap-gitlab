@@ -20,6 +20,7 @@ This tap:
   - [Issues](https://docs.gitlab.com/ee/api/issues.html)
   - [Issue notes](https://docs.gitlab.com/ee/api/notes.html)
   - [Issue resource label events](https://docs.gitlab.com/ee/api/resource_label_events.html)
+  - [Issue resource milestone events](https://docs.gitlab.com/ee/api/resource_milestone_events.html)
   - [Pipelines](https://docs.gitlab.com/ee/api/pipelines.html)
   - [Jobs](https://docs.gitlab.com/ee/api/jobs.html)
   - [Projects](https://docs.gitlab.com/ee/api/projects.html)
