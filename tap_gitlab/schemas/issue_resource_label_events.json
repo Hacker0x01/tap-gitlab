@@ -31,21 +31,28 @@
             "type": "integer"
         },
         "label": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "color": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": ["null", "string"]
+                        }
+                    }
                 },
-                "name": {
-                    "type": "string"
-                },
-                "color": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": ["null", "string"]
+                {
+                    "type": "null"
                 }
-            }
+            ]
         },
         "action": {
             "type": "string"
