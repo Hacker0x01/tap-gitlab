@@ -661,7 +661,6 @@ def sync_issue_notes(project, issue):
     with Transformer(pre_hook=format_timestamp) as transformer:
         for row in gen_request(url):
             flatten_id(row, "author")
-            flatten_id(row, "attachment")
 
             row['project_id'] = project['id']
             row['issue_iid'] = issue['iid']
@@ -689,7 +688,6 @@ def sync_issue_resource_label_events(project, issue):
     with Transformer(pre_hook=format_timestamp) as transformer:
         for row in gen_request(url):
             flatten_id(row, "user")
-            flatten_id(row, "label")
 
             row['project_id'] = project['id']
             row['issue_iid'] = issue['iid']
