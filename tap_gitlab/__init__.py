@@ -371,6 +371,10 @@ def sync_commits(project):
     stream = CATALOG.get_stream(entity)
     if stream is None or not stream.is_selected():
         return
+    # Fetching commits for project 105 is causing gitlab's API to return error 500
+    if project["id"] == 105:
+        return
+
     mdata = metadata.to_map(stream.metadata)
 
     # Keep a state for the commits fetched per project
