@@ -226,7 +226,13 @@ RESOURCES = {
         'schema': load_schema('group_variables'),
         'key_properties': ['group_id', 'key'],
         'replication_method': 'FULL_TABLE',
-    }
+    },
+    'iterations': {
+        'url': '/groups/{}/iterations',
+        'schema': load_schema('iterations'),
+        'key_properties': ['id'],
+        'replication_method': 'FULL_TABLE',
+    },
 }
 
 ULTIMATE_RESOURCES = ("epics", "epic_issues")
@@ -553,6 +559,16 @@ def sync_tags(project):
 
             singer.write_record("tags", transformed_row, time_extracted=utils.now())
 
+def sync_iterations(group):
+    url = get_url("iterations", group['id'])
+
+    with Transformer(pre_hook=format_timestamp) as transformer:
+        for row in gen_request(url):
+            transformed_row = transformer.transform(row, RESOURCES["iterations"]["schema"])
+
+            # VALIDATE: not sure what this code exactly does, but tried to modify based on project/milestone pattern.
+            if row["updated_at"] >= get_start("iteration_{}".format(group["id"])):
+                singer.write_record("iterations", transformed_row, time_extracted=utils.now())
 
 def sync_milestones(entity, element="project"):
     stream_name = "{}_milestones".format(element)
@@ -793,6 +809,8 @@ def sync_group(gid, pids):
                 sync_project(pid)
 
     sync_milestones(data, "group")
+
+    sync_iterations(group)
 
     sync_members(data, "group")
 
