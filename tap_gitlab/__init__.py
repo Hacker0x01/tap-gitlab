@@ -567,8 +567,8 @@ def sync_iterations(group):
             transformed_row = transformer.transform(row, RESOURCES["iterations"]["schema"])
 
             # VALIDATE: not sure what this code exactly does, but tried to modify based on project/milestone pattern.
-            if row["updated_at"] >= get_start("iteration_{}".format(group["id"])):
-                singer.write_record("iterations", transformed_row, time_extracted=utils.now())
+            # if row["updated_at"] >= get_start("iteration_{}".format(group["id"])):
+            singer.write_record("iterations", transformed_row, time_extracted=utils.now())
 
 def sync_milestones(entity, element="project"):
     stream_name = "{}_milestones".format(element)
