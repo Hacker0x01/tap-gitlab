@@ -570,7 +570,7 @@ def sync_iterations(entity, element='project'):
 
     with Transformer(pre_hook=format_timestamp) as transformer:
         for row in gen_request(url):
-            transformed_row = transformer.transform(row, RESOURCES["iterations"]["schema"], mdata)
+            transformed_row = transformer.transform(row, RESOURCES[element + "_iterations"]["schema"], mdata)
 
             # VALIDATE: not sure what this code exactly does, but tried to modify based on project/milestone pattern.
             # if row["updated_at"] >= get_start("iteration_{}".format(group["id"])):
