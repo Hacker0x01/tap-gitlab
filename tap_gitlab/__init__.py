@@ -442,6 +442,15 @@ def sync_issues(project):
                 row["total_time_spent"] = None
                 row["human_time_estimate"] = None
                 row["human_total_time_spent"] = None
+            
+            # Get the iterations
+            if 'iteration' in row.keys():
+                it: dict = row["iteration"]
+                row["iteration_id"] = it["id"] if 'id' in it.keys() else None
+                row["iteration_iid"] = it["iid"] if 'iid' in it.keys() else None
+                row["iteration_group_id"] = it["group_id"] if 'group_id' in it.keys() else None
+                row["iteration_title"] = it["title"] if 'title' in it.keys() else None
+                row.pop('iteration')
 
             transformed_row = transformer.transform(row, RESOURCES[entity]["schema"], mdata)
 
