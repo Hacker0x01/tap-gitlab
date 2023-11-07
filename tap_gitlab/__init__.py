@@ -227,10 +227,10 @@ RESOURCES = {
         'key_properties': ['group_id', 'key'],
         'replication_method': 'FULL_TABLE',
     },
-    'iterations': {
-        'url': '/groups/{}/iterations',
-        'schema': load_schema('iterations'),
-        'key_properties': ['id'],
+    'group_iterations': {
+        'url': '/groups/{id}/iterations',
+        'schema': load_schema('group_iterations'),
+        'key_properties': ['group_id', 'id'],
         'replication_method': 'FULL_TABLE',
     },
 }
@@ -559,16 +559,22 @@ def sync_tags(project):
 
             singer.write_record("tags", transformed_row, time_extracted=utils.now())
 
-def sync_iterations(group):
-    url = get_url("iterations", group['id'])
+def sync_iterations(entity, element='project'):
+    stream_name = f"{element}_iterations"
+    stream = CATALOG.get_stream(stream_name)
+    if stream is None or not stream.is_selected():
+        return
+    mdata = metadata.to_map(stream.metadata)
+
+    url = get_url(entity=element + "_iterations", id=entity['id'])
 
     with Transformer(pre_hook=format_timestamp) as transformer:
         for row in gen_request(url):
-            transformed_row = transformer.transform(row, RESOURCES["iterations"]["schema"])
+            transformed_row = transformer.transform(row, RESOURCES["iterations"]["schema"], mdata)
 
             # VALIDATE: not sure what this code exactly does, but tried to modify based on project/milestone pattern.
             # if row["updated_at"] >= get_start("iteration_{}".format(group["id"])):
-            singer.write_record("iterations", transformed_row, time_extracted=utils.now())
+            singer.write_record(element + "_iterations", transformed_row, time_extracted=utils.now())
 
 def sync_milestones(entity, element="project"):
     stream_name = "{}_milestones".format(element)
@@ -810,7 +816,7 @@ def sync_group(gid, pids):
 
     sync_milestones(data, "group")
 
-    sync_iterations(group)
+    sync_iterations(data, "group")
 
     sync_members(data, "group")
 
