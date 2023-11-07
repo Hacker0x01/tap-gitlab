@@ -233,6 +233,12 @@ RESOURCES = {
         'key_properties': ['group_id', 'id'],
         'replication_method': 'FULL_TABLE',
     },
+    'project_iterations': {
+        'url': '/projects/{id}/iterations',
+        'schema': load_schema('project_iterations'),
+        'key_properties': ['group_id', 'id'],  # strange enough, this endpoint does not have a "project id", but a "group id" like the group endpoints
+        'replication_method': 'FULL_TABLE',
+    },
 }
 
 ULTIMATE_RESOURCES = ("epics", "epic_issues")
@@ -973,6 +979,7 @@ def sync_project(pid):
         sync_pipelines(data)
         sync_vulnerabilities(data)
         sync_variables(data)
+        sync_iterations(data)
 
         if not stream.is_selected():
             return
