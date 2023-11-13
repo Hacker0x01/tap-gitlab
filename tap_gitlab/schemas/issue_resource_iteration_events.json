@@ -1,0 +1,49 @@
+{
+    "type": "object",
+    "properties": {
+        "project_id": {
+            "type": "integer"
+        },
+        "issue_iid": {
+            "type": "integer"
+        },
+        "id": {
+            "type": "integer"
+        },
+        "user_id": {
+            "type": ["null", "integer"]
+        },
+        "created_at": {
+            "anyOf": [
+                {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        },
+        "resource_type": {
+            "type": "string"
+        },
+        "resource_id": {
+            "type": "integer"
+        },
+        "iteration_id": {
+            "type": ["integer"]
+        },
+        "iteration_iid": {
+            "type": ["integer"]
+        },
+        "iteration_group_id": {
+            "type": ["null", "integer"]
+        },
+        "iteration_title": {
+            "type": ["null", "string"]
+        },
+        "action": {
+            "type": "string"
+        }
+    }
+}
