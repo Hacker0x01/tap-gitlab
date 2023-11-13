@@ -198,7 +198,7 @@ RESOURCES = {
     },
     "issue_resource_iteration_events": {
         'url': '/projects/{id}/issues/{secondary_id}/resource_iteration_events',
-        'schema': load_schema('resource_iteration_events'),
+        'schema': load_schema('issue_resource_iteration_events'),
         'key_properties': ['project_id', 'issue_iid', 'id'],
         'replication_method': 'INCREMENTAL',
         'replication_keys': ['created_at'],
