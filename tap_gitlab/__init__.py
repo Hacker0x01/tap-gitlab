@@ -459,9 +459,9 @@ def sync_issues(project):
             utils.update_state(STATE, state_key, row['updated_at'])
 
             # And then sync all the notes and resource state events for that issue
-            sync_issue_notes(project, transformed_row)
-            sync_issue_resource_label_events(project, transformed_row)
-            sync_issue_resource_milestone_events(project, transformed_row)
+            # sync_issue_notes(project, transformed_row)
+            # sync_issue_resource_label_events(project, transformed_row)
+            # sync_issue_resource_milestone_events(project, transformed_row)
 
     singer.write_state(STATE)
 
@@ -976,20 +976,20 @@ def sync_project(pid):
 
     if data['last_activity_at'] >= get_start(state_key):
 
-        sync_members(data)
-        sync_users(data)
+        # sync_members(data)
+        # sync_users(data)
         sync_issues(data)
-        sync_merge_requests(data)
-        sync_commits(data)
-        sync_branches(data)
-        sync_milestones(data)
-        sync_labels(data)
-        sync_releases(data)
-        sync_tags(data)
-        sync_pipelines(data)
-        sync_vulnerabilities(data)
-        sync_variables(data)
-        sync_iterations(data)
+        # sync_merge_requests(data)
+        # sync_commits(data)
+        # sync_branches(data)
+        # sync_milestones(data)
+        # sync_labels(data)
+        # sync_releases(data)
+        # sync_tags(data)
+        # sync_pipelines(data)
+        # sync_vulnerabilities(data)
+        # sync_variables(data)
+        # sync_iterations(data)
 
         if not stream.is_selected():
             return
