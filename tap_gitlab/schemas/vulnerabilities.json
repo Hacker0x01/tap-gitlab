@@ -1,71 +1,47 @@
 {
   "type": "object",
   "properties": {
-    "author_id": {
-      "type": [
-        "null",
-        "integer"
-      ]
+    "id": {
+      "type": ["null", "integer"]
     },
-    "confidence": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "created_at": {
-      "anyOf": [
-        {
-          "type": "string",
-          "format": "date-time"
-        },
-        {
-          "type": "null"
-        }
-      ]
+    "title": {
+      "type": ["null", "string"]
     },
     "description": {
-      "type": [
-        "null",
-        "string"
-      ]
+      "type": ["null", "string"]
     },
-    "dismissed_at": {
-      "anyOf": [
-        {
-          "type": "string",
-          "format": "date-time"
-        },
-        {
-          "type": "null"
-        }
-      ]
+    "state": {
+      "type": ["null", "string"]
     },
-    "dismissed_by_id": {
-      "type": [
-        "null",
-        "integer"
-      ]
+    "severity": {
+      "type": ["null", "string"]
     },
-    "due_date": {
-      "anyOf": [
-        {
-          "type": "string",
-          "format": "date-time"
-        },
-        {
-          "type": "null"
-        }
-      ]
+    "confidence": {
+      "type": ["null", "string"]
     },
-    "finding": {
+    "report_type": {
+      "type": ["null", "string"]
+    },
+    "project": {
       "type": "object",
       "properties": {
-        "confidence": {
-          "type": [
-            "null",
-            "string"
-          ]
+        "id": {
+          "type": ["null", "integer"]
+        },
+        "description": {
+          "type": ["null", "string"]
+        },
+        "name": {
+          "type": ["null", "string"]
+        },
+        "name_with_namespace": {
+          "type": ["null", "string"]
+        },
+        "path": {
+          "type": ["null", "string"]
+        },
+        "path_with_namespace": {
+          "type": ["null", "string"]
         },
         "created_at": {
           "anyOf": [
@@ -77,71 +53,24 @@
               "type": "null"
             }
           ]
-        },
+        }
+      }
+    },
+    "finding": {
+      "type": "object",
+      "properties": {
         "id": {
-          "type": [
-            "null",
-            "integer"
-          ]
+          "type": ["null", "integer"]
         },
-        "location_fingerprint": {
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "metadata_version": {
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "name": {
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "primary_identifier_id": {
-          "type": [
-            "null",
-            "integer"
-          ]
-        },
-        "project_fingerprint": {
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "project_id": {
-          "type": [
-            "null",
-            "integer"
-          ]
-        },
-        "raw_metadata": {
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "report_type": {
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "scanner_id": {
-          "type": [
-            "null",
-            "integer"
-          ]
-        },
-        "severity": {
-          "type": [
-            "null",
-            "string"
+        "created_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "updated_at": {
@@ -155,24 +84,163 @@
             }
           ]
         },
-        "uuid": {
-          "type": [
-            "null",
-            "string"
-          ]
+        "severity": {
+          "type": ["null", "string"]
+        },
+        "confidence": {
+          "type": ["null", "string"]
+        },
+        "report_type": {
+          "type": ["null", "string"]
+        },
+        "project_id": {
+          "type": ["null", "integer"]
+        },
+        "scanner_id": {
+          "type": ["null", "integer"]
+        },
+        "primary_identifier_id": {
+          "type": ["null", "integer"]
+        },
+        "project_fingerprint": {
+          "type": ["null", "string"]
+        },
+        "location_fingerprint": {
+          "type": ["null", "string"]
+        },
+        "name": {
+          "type": ["null", "string"]
+        },
+        "metadata_version": {
+          "type": ["null", "string"]
+        },
+        "raw_metadata": {
+          "type": ["null", "string"]
         },
         "vulnerability_id": {
-          "type": [
-            "null",
-            "integer"
-          ]
+          "type": ["null", "integer"]
+        },
+        "details": {
+          "type": ["null", "string"]
+        },
+        "description": {
+          "type": ["null", "string"]
+        },
+        "solution": {
+          "type": ["null", "string"]
+        },
+        "cve": {
+          "type": ["null", "string"]
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "image": {
+              "type": ["null", "string"]
+            },
+            "dependency": {
+              "type": "object",
+              "properties": {
+                "package": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": ["null", "string"]
+                    }
+                  }
+                },
+                "version": {
+                  "type": ["null", "string"]
+                }
+              }
+            },
+            "operating_system": {
+              "type": ["null", "string"]
+            }
+          }
+        },
+        "detection_method": {
+          "type": ["null", "string"]
+        },
+        "uuid": {
+          "type": ["null", "string"]
+        },
+        "config_options": {
+          "type": ["null", "string"]
         }
       }
     },
-    "id": {
-      "type": [
-        "null",
-        "integer"
+    "resolved_on_default_branch": {
+      "type": ["null", "string"]
+    },
+    "project_default_branch": {
+      "type": ["null", "string"]
+    },
+    "author_id": {
+      "type": ["null", "integer"]
+    },
+    "resolved_by_id": {
+      "type": ["null", "integer"]
+    },
+    "dismissed_by_id": {
+      "type": ["null", "integer"]
+    },
+    "confirmed_by_id": {
+      "type": ["null", "integer"]
+    },
+    "created_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "updated_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "resolved_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dismissed_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "confirmed_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
       ]
     },
     "last_edited_at": {
@@ -186,146 +254,33 @@
         }
       ]
     },
-    "last_edited_by_id": {
-      "type": [
-        "null",
-        "integer"
+    "start_date": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
       ]
     },
-    "project": {
-      "type": "object",
-      "properties": {
-        "created_at": {
-          "anyOf": [
-            {
-              "type": "string",
-              "format": "date-time"
-            },
-            {
-              "type": "null"
-            }
-          ]
+    "updated_by_id": {
+      "type": ["null", "integer"]
+    },
+    "last_edited_by_id": {
+      "type": ["null", "integer"]
+    },
+    "due_date": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
         },
-        "description": {
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "id": {
-          "type": [
-            "null",
-            "integer"
-          ]
-        },
-        "name": {
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "name_with_namespace": {
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "path": {
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "path_with_namespace": {
-          "type": [
-            "null",
-            "string"
-          ]
+        {
+          "type": "null"
         }
-      },
-      "project_default_branch": {
-        "type": [
-          "null",
-          "string"
-        ]
-      },
-      "report_type": {
-        "type": [
-          "null",
-          "string"
-        ]
-      },
-      "resolved_at": {
-        "anyOf": [
-          {
-            "type": "string",
-            "format": "date-time"
-          },
-          {
-            "type": "null"
-          }
-        ]
-      },
-      "resolved_by_id": {
-        "type": [
-          "null",
-          "integer"
-        ]
-      },
-      "resolved_on_default_branch": {
-        "type": [
-          "null",
-          "string"
-        ]
-      },
-      "severity": {
-        "type": [
-          "null",
-          "string"
-        ]
-      },
-      "start_date": {
-        "anyOf": [
-          {
-            "type": "string",
-            "format": "date-time"
-          },
-          {
-            "type": "null"
-          }
-        ]
-      },
-      "state": {
-        "type": [
-          "null",
-          "string"
-        ]
-      },
-      "title": {
-        "type": [
-          "null",
-          "string"
-        ]
-      },
-      "updated_at": {
-        "anyOf": [
-          {
-            "type": "string",
-            "format": "date-time"
-          },
-          {
-            "type": "null"
-          }
-        ]
-      },
-      "updated_by_id": {
-        "type": [
-          "null",
-          "integer"
-        ]
-      }
+      ]
     }
   }
 }
-
-
